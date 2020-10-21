@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>Birds of North Carolina</h1>
+
+<table class="table table-striped">
+    <thead>
+        <th>Name</th>
+        <th>Scientific Name</th>
+        <th>Total Number of Birds Viewed</th>
+        <th>Latitude/Longitud</th>
+    </thead>
+    <tbody id="bird-list">
+
+    </tbody>
+</table>
+
+
+<script>
+
+    (async function () {
+        const birdListResponse = await fetch("/birds")
+        const birdList = await birdListResponse.json()
+        const birdListElement = document.querySelector("#bird-list")
+        
+        for (const bird of birdList) {
+            const row = document.createElement("TR")
+            
+            birdListElement.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${bird.comName}</td>
+                <td>${bird.sciName}</td>
+                <td>${bird.howMany}</td>
+                <td>${bird.lat} | ${bird.lng}</td>
+            </tr>
+            `)
+        }
+
+    })()
+
+
+</script>
+
+{% endblock content %}
